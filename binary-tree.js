@@ -10,20 +10,20 @@ class BinaryTree {
 			return;
 		}
 		var newNode = new Node(data);
-		if(this.root == null){
+		if(this.root == null) {
 			this.root = newNode;
 		} else {
 			var current = this.root;
-			while(true){
-				if(data > current.data){
-					if(current.right){
+			while(true) {
+				if(data > current.data) {
+					if(current.right) {
 						current = current.right;
 					} else {
 						current.right = newNode;
 						break;
 					}
 				} else {
-					if(current.left){
+					if(current.left) {
 						current = current.left;
 					} else {
 						current.left = newNode;
@@ -35,7 +35,18 @@ class BinaryTree {
 	}
 
 	contains(data) {
-
+		var current = this.root;
+		while(current){
+			if(current.data == data) {
+				return true;
+			}
+			if(data > current.data) {
+				current = current.right;
+			} else {
+				current = current.left;
+			}
+		}
+		return false;
 	}
 
 	remove(data) {
@@ -64,9 +75,10 @@ class BinaryTree {
 
 var binary = new BinaryTree();
 console.log(binary.isEmpty());
-console.log(binary.size())
 binary.insert(2);
 binary.insert(3);
 binary.insert(1);
 console.log(binary);
 console.log(binary.size());
+console.log(binary.contains(2));
+console.log(binary.contains(4));
