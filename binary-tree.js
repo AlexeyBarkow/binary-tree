@@ -1,5 +1,4 @@
 'use strict';
-//require("./node.js");
 class BinaryTree {
 	constructor() {
 		this.root = null;
@@ -92,9 +91,7 @@ class BinaryTree {
 
 		}
 		var replace = goLeftAndThenRight(current);
-	//	console.log(replace);
 		if (replace == null || replace == current.left) {
-			//console.log("null or right replacemet");
 			if (!parent) {
 				this.root = replace;
 			} else {
@@ -106,7 +103,6 @@ class BinaryTree {
 
 			}
 		} else {
-			//console.log("here i am");
 			this.remove(replace.data);
 			replace.left = current.left;
 			replace.right = current.right;
@@ -143,25 +139,3 @@ class BinaryTree {
 		return this.root == null;
 	}
 }
-/*
-var bt = new BinaryTree();
-bt.insert(13);
-bt.insert(10);
-bt.insert(8);
-bt.insert(18);
-bt.insert(12);
-bt.insert(11);
-bt.insert(15);
-bt.insert(6);
-bt.insert(20);
-bt.insert(7);
-bt.insert(4);
-bt.insert(7.5);
-console.log(bt.size());
-bt.remove(15);
-console.log(bt.size());
-bt.remove(8);
-console.log(bt.size());
-console.log(bt);
-*/
-//console.log(binary);
