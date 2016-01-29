@@ -49,8 +49,80 @@ class BinaryTree {
 		return false;
 	}
 
+	//left deletion
 	remove(data) {
+		var current = this.root,
+			parent = null;
+		function goLeftAndThenRight(elem){
+			console.log(elem);
+			var replacement;
+			if (!elem.left) {
+				if(!elem.right) {
+					return null;
+				} else {
+					return elem.right;
+				}
+			} else {
+				replacement = elem.left;
+				while(replacement.right) {
+					replacement = replacement.right;
+				}
+				return replacement;
+			}
+		}
 
+		while (current) {
+			if(current.data == data) {
+				break;
+			}
+			if(data > current.data) {
+				if(current.right) {
+					parent = current;
+					current = current.right;
+				} else {
+					return false;
+				}
+			} else {
+				if(current.left) {
+					parent = current;
+					current = current.left
+				} else { 
+					return false;
+				}
+			}
+
+		}
+		var replace = goLeftAndThenRight(current);
+	//	console.log(replace);
+		if (replace == null || replace == current.right) {
+			//console.log("null or right replacemet");
+			if (!parent) {
+				this.root = replace;
+			} else {
+				if (parent.left == current) {
+					parent.left = replace;
+				} else {
+					parent.right = replace;
+				}
+
+			}
+		} else {
+			//console.log("here i am");
+			this.remove(replace.data);
+			replace.left = current.left;
+			replace.right = current.right;
+			if (!parent) {
+				this.root = replace;
+			} else {
+				if (parent.left == current) {
+					parent.left = replace;
+				} else {
+					parent.right = replace;
+				}
+
+			}
+		}
+		return true;
 	}
 
 	size(current) {
@@ -76,9 +148,8 @@ class BinaryTree {
 var binary = new BinaryTree();
 console.log(binary.isEmpty());
 binary.insert(2);
-binary.insert(3);
-binary.insert(1);
 console.log(binary);
 console.log(binary.size());
-console.log(binary.contains(2));
 console.log(binary.contains(4));
+binary.remove(2);
+//console.log(binary);
