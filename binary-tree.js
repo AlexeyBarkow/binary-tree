@@ -49,7 +49,6 @@ class BinaryTree {
 		return false;
 	}
 
-	//left deletion
 	remove(data) {
 		var current = this.root,
 			parent = null;
