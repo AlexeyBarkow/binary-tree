@@ -42,8 +42,19 @@ class BinaryTree {
 
 	}
 
-	size() {
-
+	size(current) {
+		current = current || this.root;
+		if(!current) {
+			return 0;
+		}
+		var sum = 1;
+		if(current.left) {
+			sum += this.size(current.left);
+		}
+		if(current.right) {
+			sum += this.size(current.right);
+		}
+		return sum;
 	}
 
 	isEmpty() {
@@ -53,6 +64,9 @@ class BinaryTree {
 
 var binary = new BinaryTree();
 console.log(binary.isEmpty());
+console.log(binary.size())
 binary.insert(2);
 binary.insert(3);
+binary.insert(1);
 console.log(binary);
+console.log(binary.size());
