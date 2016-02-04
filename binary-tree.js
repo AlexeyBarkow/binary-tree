@@ -48,26 +48,88 @@ class BinaryTree {
 		return false;
 	}
 
-	remove(data) {
-		var current = this.root,
-			parent = null;
-		function goLeftAndThenRight(elem){
-			console.log(elem);
-			var replacement;
-			if (!elem.right) {
-				if(!elem.left) {
-					return null;
+	remove(data, parent){
+		var current, cdata, replace, currParent;
+		if(parent == null) {
+			current = this.root;
+		} else {
+			if(parent.data < data) {
+				current = parent.right;
+			} 
+			if(parent.data > data) {
+				current = parent.left;
+			}
+		} 
+
+		if(!current) {
+			return;
+		}
+		if(current.data == data) {
+			if(!current.left || !current.right) {
+				if(!current.left && !current.right) {
+					if(parent) {
+						this.cutTheLeaf(parent, current, null);
+					} else {
+						this.root = null;
+					}
 				} else {
-					return elem.left;
+					if(parent) {
+						this.cutTheLeaf(parent, current, current.left || current.right);
+					} else {
+						this.root = current.left || current.right;
+					}
 				}
 			} else {
-				replacement = elem.right;
-				while(replacement.left) {
-					replacement = replacement.left;
+				currParent = current;
+				replace = current.right;
+				while(replace.left) {
+					currParent = replace;
+					replace = replace.left;
 				}
-				return replacement;
-			}
+				this.cutTheLeaf(currParent, replace);
+				current.data = replace.data;
+			} 
+		} else {
+			this.remove(data, current);
 		}
+	}
+
+	cutTheLeaf(parent, child, replacement) {
+		if(parent.left == child) {
+			parent.left = replacement;
+		} 
+		if(parent.right == child) {
+			parent.right = replacement;
+		}
+	}
+
+	/*goRightAndThenLeft(elem) {
+		if(!elem) {
+			return null;
+		}
+		//console.log(elem);
+		var replacement;
+		if (!elem.right) {
+			if(!elem.left) {
+				return null;
+			} else {
+				return elem.left;
+			}
+		} else {
+			replacement = elem.right;
+			while(replacement.left) {
+				replacement = replacement.left;
+			}
+			return replacement;
+		}
+	}
+	*/
+	//my previous realization
+	/*
+	remove_tmp(data) {
+		var current = this.root,
+			parent = null;
+		
 
 		while (current) {
 			if(current.data == data) {
@@ -90,7 +152,7 @@ class BinaryTree {
 			}
 
 		}
-		var replace = goLeftAndThenRight(current);
+		var replace = this.goRightAndThenLeft(current);
 		if (replace == null || replace == current.left) {
 			if (!parent) {
 				this.root = replace;
@@ -103,7 +165,7 @@ class BinaryTree {
 
 			}
 		} else {
-			this.remove(replace.data);
+			this.remove_tmp(replace.data);
 			replace.left = current.left;
 			replace.right = current.right;
 			if (!parent) {
@@ -118,7 +180,7 @@ class BinaryTree {
 			}
 		}
 		return true;
-	}
+	}*/
 
 	size(current) {
 		current = current || this.root;
