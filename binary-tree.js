@@ -66,19 +66,19 @@ class BinaryTree {
 		}
 		if(current.data == data) {
 			if(!current.left || !current.right) {
-				if(!current.left && !current.right) {
+				/*if(!current.left && !current.right) {
 					if(parent) {
 						this.cutTheLeaf(parent, current, null);
 					} else {
 						this.root = null;
 					}
+				} else {*/
+				if(parent) {
+					this.cutTheLeaf(parent, current, current.left || current.right);
 				} else {
-					if(parent) {
-						this.cutTheLeaf(parent, current, current.left || current.right);
-					} else {
-						this.root = current.left || current.right;
-					}
+					this.root = current.left || current.right;
 				}
+			//	}
 			} else {
 				currParent = current;
 				replace = current.right;
